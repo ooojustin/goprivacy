@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	goprivacy "justin.ooo/goprivacy/pkg"
+	"github.com/ooojustin/goprivacy"
 )
 
 var client goprivacy.Client
