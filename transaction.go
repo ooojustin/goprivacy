@@ -1,6 +1,8 @@
 package goprivacy
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 type TransactionResponse struct {
 	Data         []Transaction `json:"data"`
@@ -41,5 +43,22 @@ func (pc Client) ListTransactions(status string) (*[]Transaction, error) {
 	}
 
 	return &tr.Data, nil
+
+}
+
+func (pc Client) GetTransaction(transactionToken string) (*Transaction, error) {
+
+	url := BaseURL + "transaction/all?transaction_token=" + transactionToken
+	body, err := pc.GET(url)
+	if err != nil {
+		return nil, err
+	}
+
+	var tr TransactionResponse
+	if err = json.Unmarshal(*body, &tr); err != nil {
+		return nil, err
+	}
+
+	return &tr.Data[0], nil
 
 }
