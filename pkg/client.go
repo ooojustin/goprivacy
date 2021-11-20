@@ -1,4 +1,4 @@
-package api
+package goprivacy
 
 // https://privacy.com/developer/docs
 
