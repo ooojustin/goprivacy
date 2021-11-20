@@ -13,6 +13,7 @@ func main() {
 	//listCards(1)
 	//retrieveCard("c35a015e-3cec-460b-92f3-8d19b63f50ac")
 	//listFundingAccounts()
+	//listTransactions()
 }
 
 func listCards(page int) {
@@ -38,6 +39,16 @@ func retrieveCard(token string) {
 func listFundingAccounts() {
 	if accounts, err := client.ListFundingAccounts(); err == nil {
 		fmt.Println(accounts)
+	} else {
+		fmt.Println(err)
+	}
+}
+
+func listTransactions() {
+	if transactions, err := client.ListTransactions("all"); err == nil {
+		for _, transaction := range *transactions {
+			fmt.Println(transaction)
+		}
 	} else {
 		fmt.Println(err)
 	}
