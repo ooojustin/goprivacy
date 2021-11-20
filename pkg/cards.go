@@ -6,13 +6,13 @@ import (
 )
 
 type CardResponse struct {
-	Data         []PrivacyCard `json:"data"`
-	TotalEntries int           `json:"total_entries"`
-	TotalPages   int           `json:"total_pages"`
-	Page         int           `json:"page"`
+	Data         []Card `json:"data"`
+	TotalEntries int    `json:"total_entries"`
+	TotalPages   int    `json:"total_pages"`
+	Page         int    `json:"page"`
 }
 
-type PrivacyCard struct {
+type Card struct {
 	Created            string `json:"created"`
 	Token              string `json:"token"`
 	LastFour           string `json:"last_four"`
@@ -24,7 +24,7 @@ type PrivacyCard struct {
 	State              string `json:"state"`
 }
 
-func (pc PrivacyClient) GetCards(page int) (*[]PrivacyCard, error) {
+func (pc Client) ListCards(page int) (*[]Card, error) {
 
 	url := BaseURL + "card?page=" + strconv.Itoa(page)
 	body, err := pc.GET(url)
@@ -41,7 +41,7 @@ func (pc PrivacyClient) GetCards(page int) (*[]PrivacyCard, error) {
 
 }
 
-func (pc PrivacyClient) GetCard(cardToken string) (*PrivacyCard, error) {
+func (pc Client) GetCard(cardToken string) (*Card, error) {
 
 	url := BaseURL + "card?card_token=" + cardToken
 	body, err := pc.GET(url)

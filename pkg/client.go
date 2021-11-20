@@ -11,11 +11,11 @@ import (
 
 const BaseURL = "https://api.privacy.com/v1/"
 
-type PrivacyClient struct {
+type Client struct {
 	Key string
 }
 
-func (pc PrivacyClient) GET(url string) (*[]byte, error) {
+func (pc Client) GET(url string) (*[]byte, error) {
 
 	client := http.Client{}
 	req, _ := http.NewRequest("GET", url, nil)
