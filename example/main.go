@@ -46,9 +46,9 @@ func listFundingAccounts() {
 }
 
 func listTransactions() {
-	if transactions, err := client.ListTransactions("all"); err == nil {
+	if transactions, err := client.ListAllTransactions(); err == nil {
 		for _, transaction := range *transactions {
-			fmt.Println(transaction.Token)
+			fmt.Println(transaction)
 		}
 	} else {
 		fmt.Println(err)

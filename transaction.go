@@ -2,6 +2,7 @@ package goprivacy
 
 import (
 	"encoding/json"
+	"net/url"
 )
 
 type TransactionResponse struct {
@@ -29,10 +30,20 @@ type Transaction struct {
 	Token         string     `json:"token"`
 }
 
-func (pc Client) ListTransactions(status string) (*[]Transaction, error) {
+func (pc Client) ListAllTransactions() (*[]Transaction, error) {
+	return pc.ListTransactions("all", map[string]string{})
+}
 
-	url := BaseURL + "transaction/" + status
-	body, err := pc.GET(url)
+func (pc Client) ListTransactions(status string, params map[string]string) (*[]Transaction, error) {
+
+	dest := BaseURL + "transaction/" + status + "?"
+	uv := url.Values{}
+	for k, v := range params {
+		uv.Add(k, v)
+	}
+	dest += uv.Encode()
+
+	body, err := pc.GET(dest)
 	if err != nil {
 		return nil, err
 	}
@@ -48,8 +59,8 @@ func (pc Client) ListTransactions(status string) (*[]Transaction, error) {
 
 func (pc Client) GetTransaction(transactionToken string) (*Transaction, error) {
 
-	url := BaseURL + "transaction/all?transaction_token=" + transactionToken
-	body, err := pc.GET(url)
+	dest := BaseURL + "transaction/all?transaction_token=" + transactionToken
+	body, err := pc.GET(dest)
 	if err != nil {
 		return nil, err
 	}
