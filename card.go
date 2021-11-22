@@ -26,8 +26,8 @@ type Card struct {
 
 func (pc Client) ListCards(page int) (*[]Card, error) {
 
-	url := BaseURL + "card?page=" + strconv.Itoa(page)
-	body, err := pc.GET(url)
+	dest := BaseURL + "card?page=" + strconv.Itoa(page)
+	body, err := pc.GET(dest)
 	if err != nil {
 		return nil, err
 	}
@@ -43,8 +43,8 @@ func (pc Client) ListCards(page int) (*[]Card, error) {
 
 func (pc Client) GetCard(cardToken string) (*Card, error) {
 
-	url := BaseURL + "card?card_token=" + cardToken
-	body, err := pc.GET(url)
+	dest := BaseURL + "card?card_token=" + cardToken
+	body, err := pc.GET(dest)
 	if err != nil {
 		return nil, err
 	}
