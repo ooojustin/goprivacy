@@ -10,16 +10,16 @@ var client goprivacy.Client
 
 func main() {
 	client = goprivacy.Client{Key: "bbb0e10d-8aad-4f28-9800-c69e4b0d25cf"}
-	//listCards(1)
+	//listCards(1, map[string]string{})
 	//retrieveCard("c35a015e-3cec-460b-92f3-8d19b63f50ac")
 	//listFundingAccounts()
 	//listTransactions()
 	//retrieveTransaction("512a7499-6e4e-4f8c-a145-143927aab80c")
 }
 
-func listCards(page int) {
+func listCards(page int, params map[string]string) {
 	// retrieve a list of cards
-	if cards, err := client.ListCards(page); err == nil {
+	if cards, err := client.ListCards(page, params); err == nil {
 		for _, card := range *cards {
 			fmt.Println(card)
 		}

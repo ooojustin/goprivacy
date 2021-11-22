@@ -2,6 +2,8 @@ package goprivacy
 
 import (
 	"encoding/json"
+	"fmt"
+	"net/url"
 	"strconv"
 )
 
@@ -17,16 +19,23 @@ type Card struct {
 	Token              string `json:"token"`
 	LastFour           string `json:"last_four"`
 	Hostname           string `json:"hostname"`
-	Mem                string `json:"memo"`
+	Memo               string `json:"memo"`
 	Type               string `json:"type"`
 	SpendLimit         int    `json:"spend_limit"`
 	SpendLimitDuration string `json:"spend_limit_duration"`
 	State              string `json:"state"`
 }
 
-func (pc Client) ListCards(page int) (*[]Card, error) {
+func (pc Client) ListCards(page int, params map[string]string) (*[]Card, error) {
 
-	dest := BaseURL + "card?page=" + strconv.Itoa(page)
+	params["page"] = strconv.Itoa(page)
+	uv := url.Values{}
+	for k, v := range params {
+		uv.Add(k, v)
+	}
+
+	dest := BaseURL + "card?" + uv.Encode()
+	fmt.Println(dest)
 	body, err := pc.GET(dest)
 	if err != nil {
 		return nil, err
@@ -43,17 +52,11 @@ func (pc Client) ListCards(page int) (*[]Card, error) {
 
 func (pc Client) GetCard(cardToken string) (*Card, error) {
 
-	dest := BaseURL + "card?card_token=" + cardToken
-	body, err := pc.GET(dest)
+	cards, err := pc.ListCards(1, map[string]string{"card_token": cardToken})
 	if err != nil {
 		return nil, err
+	} else {
+		return &(*cards)[0], nil
 	}
-
-	var cr CardResponse
-	if err = json.Unmarshal(*body, &cr); err != nil {
-		return nil, err
-	}
-
-	return &cr.Data[0], nil
 
 }
