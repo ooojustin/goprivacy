@@ -3,14 +3,14 @@ package main
 import (
 	"fmt"
 
-	"github.com/ooojustin/goprivacy"
+	goprivacy "github.com/ooojustin/goprivacy/privacy"
 )
 
 var client goprivacy.Client
 
 func main() {
 	client = goprivacy.Client{Key: "bbb0e10d-8aad-4f28-9800-c69e4b0d25cf"}
-	//listCards(1, map[string]string{})
+	listCards(1, map[string]string{})
 	//retrieveCard("c35a015e-3cec-460b-92f3-8d19b63f50ac")
 	//listFundingAccounts()
 	//listTransactions()
